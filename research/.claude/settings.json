@@ -1,0 +1,31 @@
+{
+  "includeGitInstructions": false,
+  "permissions": {
+    "defaultMode": "dontAsk",
+    "disableBypassPermissionsMode": "disable",
+    "disableAutoMode": "disable",
+    "blockReadsOutsideWorkingDirectories": true,
+    "allow": [
+      "WebSearch",
+      "WebFetch",
+      "Edit(/notes/**)"
+    ],
+    "deny": [
+      "Bash",
+      "Monitor",
+      "Agent",
+      "Skill",
+      "Workflow",
+      "Artifact",
+      "RemoteTrigger",
+      "SendMessage",
+      "CronCreate",
+      "mcp__*",
+      "Edit(/.claude/**)",
+      "Read(./.env*)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.config/**)"
+    ]
+  }
+}

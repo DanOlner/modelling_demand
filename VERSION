@@ -1,0 +1,4 @@
+template_version=1.4
+template_date=2026-10-03
+tested_claude_code=2.1.288
+stacks=r,python,web
