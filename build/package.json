@@ -1,0 +1,36 @@
+{
+  "name": "modelling-firm-demand",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A stylised flow model of where GVA is made, booked and received (model spec v1).",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.engine.json && svelte-check --tsconfig web/tsconfig.json --threshold error",
+    "calibrate": "tsx scripts/calibrate.ts",
+    "experiments": "tsx scripts/run-experiments.ts",
+    "dev": "vite --config web/vite.config.ts",
+    "build:web": "vite build --config web/vite.config.ts && tsx scripts/inline-build.ts",
+    "check:web": "svelte-check --tsconfig web/tsconfig.json",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "@types/d3-scale": "4.0.9",
+    "@types/d3-shape": "3.2.0",
+    "@types/node": "20.19.43",
+    "d3-scale": "4.0.2",
+    "d3-shape": "3.2.0",
+    "svelte": "5.57.1",
+    "svelte-check": "4.7.6",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "vite": "8.3.2",
+    "vitest": "4.1.11"
+  }
+}

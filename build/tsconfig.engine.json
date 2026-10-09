@@ -1,0 +1,9 @@
+{
+  // The model itself (src/) must run unchanged in the browser and under Node, so it is
+  // checked here without Node's or the DOM's type definitions: any use of either fails.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": []
+  },
+  "include": ["src"]
+}

@@ -7,7 +7,7 @@ A two-part Claude project, made from the dual-project template (version in `VERS
 
 This whole folder is one git repository, which you push: research notes, build code and these scripts, but not the documents in `research/sources/`. The build container never sees the repository. Once the container has run, empty `build/.git` and `build/.claude` folders owned by root appear. They're placeholders that stop the agent creating a repository or Claude Code settings there, and git ignores them.
 
-`container.sh`, `check.py` and `pdf-text` stay in this top folder, outside `build/`, so the build agent can't change scripts you run on your machine.
+`container.sh`, `check.py`, `pdf-text` and `research-gate` stay in this top folder, outside `build/`, so the build agent can't change scripts you run on your machine.
 
 The build container's language stacks are listed in `VERSION` (`stacks=`). See "Language stacks" below.
 
@@ -108,13 +108,18 @@ Chosen when the project was created (`new-dual-project --with r,python,web`). Ea
 
 The npm registry also accepts package publishing from anyone holding an account's credentials, which is why only web projects open it.
 
-**Viewing a dev server in your own browser** is off by default. To turn it on, set `PUBLISH_PORTS="5173"` at the top of `container.sh`, start the dev server with `--host 0.0.0.0`, then run `./container.sh stop` and `start`. The port is reachable only from your machine. But opening pages the agent wrote in your own browser runs its code on your machine, outside the container's firewall. Review the code first, or use a separate browser profile.
+**Viewing a dev server in your own browser** is off by default. To turn it on, put the ports in the `PUBLISH_PORTS` line near the top of `container.sh`, for example `PUBLISH_PORTS="${PUBLISH_PORTS-8000 8001}"`. Then run `./container.sh stop` and `./container.sh claude --continue`. The agent sees the list as `$PUBLISH_PORTS`, and is told to serve on `0.0.0.0` on one of those ports, so you open `http://localhost:8000`. The ports are reachable only from your machine. But opening pages the agent wrote in your own browser runs its code on your machine, outside the container's firewall. Review the code first, or use a separate browser profile.
 
 **Adding a stack later:** in `build/.devcontainer/`, set its `ARG INSTALL_...=true` line in `Dockerfile` and uncomment its lines in `allowed-domains.txt`. Then run `./container.sh rebuild` and add it to `stacks=` in `VERSION`.
 
 ## After Claude Code updates
 
-Run `./check.py`. Claude Code updates itself on your machine. The container's copy is fixed when the image is built; `./container.sh rebuild` updates it.
+The safety checks run by themselves when Claude Code's version changes, and each side refuses to run on a version that hasn't passed them:
+
+- **Research:** when a research session starts on a new version, `research-gate` runs the research checks first. That adds about 10 seconds, once per update, plus a little of your usage, and a one-line message says why. If they pass, the version is recorded and research carries on. If a check fails, or research has gained a tool it didn't have before, research is paused, and every prompt is refused until `./check.py --research-only --accept` passes.
+- **Container:** its Claude Code only changes when you rebuild. `./container.sh rebuild` installs the version your machine has, then restarts the container. `build`, `rebuild` and `claude` run the container checks when the image has a version that hasn't passed them, taking about 20 seconds. If the checks fail, Claude isn't started in the container.
+
+`VERSION` records what passed: `tested_research`, `tested_container` and research's accepted tool list. To check by hand, run `./check.py`. Add `--accept` to record the result, once you've read any warnings.
 
 ## What isn't covered
 

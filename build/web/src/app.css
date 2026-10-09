@@ -1,0 +1,129 @@
+/*
+ * Design tokens. Values are the dataviz skill's reference palette, validated with its script
+ * (4 October 2026) in both modes: places use categorical slots 1–4 in that fixed order, the
+ * producer-view bands slots 5–7. Light-mode aqua, yellow and magenta are below 3:1 contrast on
+ * the surface, so every chart that uses them carries direct labels and a table view.
+ */
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.1);
+  --wash: rgba(11, 11, 11, 0.04);
+  --place-C: #2a78d6;
+  --place-M: #eb6834;
+  --place-R: #1baf7a;
+  --place-W: #eda100;
+  --band-wages: #e87ba4;
+  --band-depreciation: #008300;
+  --band-profit: #4a3aa7;
+  --floor: #e1e0d9;
+  --flow: #52514e;
+  --up: #006300;
+  --down: #b42f2f;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme='light'])) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --ink-muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.1);
+    --wash: rgba(255, 255, 255, 0.05);
+    --place-C: #3987e5;
+    --place-M: #d95926;
+    --place-R: #199e70;
+    --place-W: #c98500;
+    --band-wages: #d55181;
+    --band-depreciation: #008300;
+    --band-profit: #9085e9;
+    --floor: #383835;
+    --flow: #c3c2b7;
+    --up: #0ca30c;
+    --down: #e66767;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --ink: #ffffff;
+  --ink-2: #c3c2b7;
+  --ink-muted: #898781;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --border: rgba(255, 255, 255, 0.1);
+  --wash: rgba(255, 255, 255, 0.05);
+  --place-C: #3987e5;
+  --place-M: #d95926;
+  --place-R: #199e70;
+  --place-W: #c98500;
+  --band-wages: #d55181;
+  --band-depreciation: #008300;
+  --band-profit: #9085e9;
+  --floor: #383835;
+  --flow: #c3c2b7;
+  --up: #0ca30c;
+  --down: #e66767;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font-size: 14px; line-height: 1.45; }
+h1 { font-size: 20px; font-weight: 600; margin: 0; }
+h2 { font-size: 16px; font-weight: 600; margin: 0; }
+h3 { font-size: 14px; font-weight: 600; margin: 0; }
+p { margin: 0; }
+button, select, input { font: inherit; color: inherit; }
+select, button {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+button { cursor: pointer; }
+button:hover, select:hover { background: var(--wash); }
+button[aria-pressed='true'] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+:focus-visible { outline: 2px solid var(--place-C); outline-offset: 2px; }
+.muted { color: var(--ink-muted); }
+.secondary { color: var(--ink-2); }
+.num { font-variant-numeric: tabular-nums; }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.segmented { display: inline-flex; gap: 0; }
+.segmented button { border-radius: 0; margin-left: -1px; }
+.segmented button:first-child { border-radius: 6px 0 0 6px; margin-left: 0; }
+.segmented button:last-child { border-radius: 0 6px 6px 0; }
+.swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: -1px; }
+.linekey { display: inline-block; width: 14px; height: 2px; border-radius: 1px; vertical-align: 3px; }
+table.data { border-collapse: collapse; width: 100%; font-size: 13px; }
+table.data th, table.data td { text-align: right; padding: 4px 8px; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
+table.data th:first-child, table.data td:first-child { text-align: left; }
+table.data th { color: var(--ink-2); font-weight: 600; }
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+  z-index: 10;
+}
+.tooltip strong { font-size: 13px; }
+.note { font-size: 13px; color: var(--ink-2); max-width: 70ch; }

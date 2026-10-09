@@ -19,3 +19,9 @@ __pycache__/
 node_modules/
 test-results/
 playwright-report/
+
+# Model results written by the batch scripts; they can be regenerated at any time
+out/
+
+# The production build of the views (npm run build:web)
+web/dist/
