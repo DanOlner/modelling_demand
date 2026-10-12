@@ -24,8 +24,17 @@ Needs Node 20.19 or later. `npm install` first.
 `docs/` is the GitHub Pages site. Each live model is a single self-contained file in its own
 subfolder, and `docs/index.html` lists them.
 
-- **Setting it up (once):** in the repository's settings on GitHub, under Pages, choose *Deploy from a branch*, then the `main` branch and the `/docs` folder.
-- **After changing the model or the views:** run `npm run build:web` and commit `docs/`. Pages serves only what is committed, and can't build the source itself.
+**Why a GitHub Actions workflow publishes it.** The repository holds the whole project, the
+research and this build folder, so the site sits at `build/docs/`, not at the top of the
+repository. GitHub Pages' simple *Deploy from a branch* setting can serve only the repository
+root or a top-level `/docs` folder, so it can't point at `build/docs`. A workflow can publish any
+folder, so `.github/workflows/publish-models.yml`, at the repository root, publishes `build/docs`
+whenever a push changes it. It publishes the folder exactly as committed and builds nothing
+itself.
+
+- **Setting it up (once):** in the repository's settings on GitHub, under Pages, set *Source* to *GitHub Actions*. The workflow is already at the repository root, outside this build folder, which is all the build container can see.
+- **Testing it:** run *Publish live models* by hand from the repository's Actions tab. A check step fails with a message if the landing page or a model's `index.html` is missing, or if `docs/` contains symbolic links.
+- **After changing the model or the views:** run `npm run build:web` and commit `docs/`. Pushing it publishes it.
 - **Adding another model:** build it into a new subfolder of `docs/`, and add it to the list in `docs/index.html`. This model's folder name is set in `web/pages.ts`.
 
 ## Where things are
@@ -34,7 +43,8 @@ subfolder, and `docs/index.html` lists them.
 - `src/params/`: the spec's parameters and the stored calibration.
 - `src/scenarios/`: the experiments E1–E8 and their expected effects.
 - `web/`: the views' source (Svelte).
-- `docs/`: the GitHub Pages site, with the built views.
+- `docs/`: the GitHub Pages site, with the built views, published by the workflow above.
+- `for-repo-root/`, when it exists: files that belong at the repository root, waiting for the user to move them there.
 - `tests/`, `e2e/`: unit and browser tests.
 - `plan_docs/`:
   - the build plan, the views plan and the build worklog;

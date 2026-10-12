@@ -341,3 +341,18 @@ On 12 October 2026 the `docs/` folder was renamed `plan_docs/`. Entries before t
   - **README:** a GitHub Pages section.
   - **Plans:** folder references now say `plan_docs/`, and the build plan's layout lists `docs/`, `plan_docs/` and `e2e/`.
 - **CLAUDE.md:** its "The model" section had disappeared, apparently overwritten when the container setup changed. It is restored, with the new paths and a note on the Pages site.
+
+## 12 October 2026: publishing via a GitHub Actions workflow
+
+- **The user's repository holds the whole project,** research and build, so this folder is `build/` and the site is at `build/docs/`. Pages' *Deploy from a branch* setting can serve only the repository root or a top-level `/docs`, so it can't serve the site.
+- **Of the options considered, the user chose a GitHub Actions workflow.** The others were a `gh-pages` branch, publishing the whole repository from its root, and a separate site repository.
+- **The workflow** is `for-repo-root/.github/workflows/publish-models.yml`. The user moves it to the repository root; the container can't see that far.
+  - It runs on pushes that change `build/docs/**` or the workflow itself, and can be run by hand.
+  - It checks that the landing page and every model's `index.html` exist, then publishes `build/docs` as committed, using `actions/configure-pages@v5`, `upload-pages-artifact@v3` and `deploy-pages@v4`. These versions are from my training, so the user should check them against GitHub's Pages docs.
+  - **Checks:** it passes `@action-validator/cli` 0.6.0's schema check, except the path globs, which that version doesn't validate. Its site-check step was run against a mock of the repository: it passes as committed, and fails with a clear message when a model's file or the landing page is missing.
+- **Notes on why:**
+  - **README:** the publishing section explains it.
+  - **For the repository's main README:** a section waits in `for-repo-root/README-section.md`.
+  - **`for-repo-root/README.md`:** says what goes where.
+  - **CLAUDE.md, `web/pages.ts`, the inlining script, the landing page's comment and the views plan:** now say how the site is published.
+- **`docs/.nojekyll`** is kept. A workflow deployment doesn't run Jekyll, so it is no longer needed, but it does no harm and keeps a branch deployment possible.

@@ -1,7 +1,7 @@
 /**
  * Turns the Vite build in docs/<model folder>/ into one self-contained file, index.html, with
- * the JavaScript (the model included) and the CSS inlined. GitHub Pages serves it from the docs/
- * folder; it also opens from the file system by double-clicking, with no server. Run by
+ * the JavaScript (the model included) and the CSS inlined. GitHub Pages serves it from docs/ (see
+ * web/pages.ts); it also opens from the file system by double-clicking, with no server. Run by
  * `npm run build:web` after `vite build`.
  */
 

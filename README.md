@@ -3,7 +3,7 @@
 A two-part Claude project, made from the dual-project template (version in `VERSION`).
 
 - **`research/`**: on your machine, Claude searches and reads the web and any documents you put in `research/sources/`, and writes notes into `research/notes/`. It can't run commands, read outside its folder, or write outside `notes/`.
-- **`build/`**: Claude works on the project inside a Docker container with permission checks skipped. It reads the notes at `/notes`, read-only.
+- **`build/`**: Claude works on the project inside a Docker container with permission checks skipped. It reads the notes at `/notes`, read-only. The live models it builds are at <https://danolner.github.io/modelling_demand/> (see "Live models").
 
 This whole folder is one git repository, which you push: research notes, build code and these scripts, but not the documents in `research/sources/`. The build container never sees the repository. Once the container has run, empty `build/.git` and `build/.claude` folders owned by root appear. They're placeholders that stop the agent creating a repository or Claude Code settings there, and git ignores them.
 
@@ -63,6 +63,18 @@ git restore --source=HEAD --staged --worktree -- build && git clean -ffdx -- bui
 Keep the `-- build` on both. `git reset --hard` would also throw away uncommitted research notes, and `git clean -ffdx` without `-- build` would delete your PDFs in `research/sources/`.
 
 Push from your machine as usual.
+
+## Live models
+
+The interactive models are published with GitHub Pages at <https://danolner.github.io/modelling_demand/>. Each runs in the browser from one self-contained page, in its own subfolder of `build/docs/`, and `build/docs/index.html` lists them.
+
+GitHub Pages' simple *Deploy from a branch* setting can serve only the repository root or a top-level `/docs` folder, so it can't point at `build/docs`. Instead, the workflow `.github/workflows/publish-models.yml` publishes `build/docs` exactly as committed, whenever a push to `master` changes it. It builds nothing and runs none of the project's code, and it sits outside `build/`, so the build agent can't change what runs on GitHub. It stops without publishing if the landing page or a model's `index.html` is missing, or if `build/docs` contains symbolic links, which the upload would follow to files elsewhere in the repository.
+
+**Setting it up (once):** in the repository's settings on GitHub, under *Pages*, set *Source* to *GitHub Actions*. Then test it by running *Publish live models* by hand from the *Actions* tab.
+
+**Updating a model:** ask the build agent to rebuild it, or run `npm run build:web` yourself inside the container (`./container.sh shell`), not on your machine. Then review `build/docs` and commit it; pushing publishes it. To add a model, build it into a new subfolder of `build/docs` and list it in `build/docs/index.html`. `build/README.md` has the details of the build.
+
+The pages are the build agent's code, and they run in the browser of everyone who visits the site, so review changes to `build/docs` before you push them, as you would anything you publish.
 
 ## Working with PDFs
 
