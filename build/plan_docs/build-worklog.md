@@ -2,6 +2,8 @@
 
 Results and departures from `/notes/model-spec-v1.md`, one entry per stage (spec §17). The newest entry is at the bottom.
 
+On 12 October 2026 the `docs/` folder was renamed `plan_docs/`. Entries before then say `docs/` for these planning files.
+
 ## 3 October 2026: plan
 
 - **Agreed with the user:** TypeScript throughout. The engine comes first, and the front end waits for the stage 8 design pass.
@@ -321,3 +323,21 @@ Results and departures from `/notes/model-spec-v1.md`, one entry per stage (spec
   - the share-link button not enabling after a scenario was applied;
   - "1 changes";
   - right-aligned table headings on the About page.
+
+## 12 October 2026: publishing on GitHub Pages
+
+- **The user renamed `docs/` to `plan_docs/`,** so that `docs/` can be the GitHub Pages site, with room for several live models side by side.
+- **The source stays in `web/`; the build moves into `docs/`.** Pages serves files as they are and can't build Svelte or TypeScript, so moving the source into `docs/` would have published unbuilt code.
+  - `npm run build:web` now writes the self-contained single file to `docs/gva-flows-v1/index.html`. `emptyOutDir` clears only that folder.
+  - The folder name is set once, in `web/pages.ts`, and read by the Vite config, the inlining script and the browser tests.
+- **The site, `docs/`:**
+  - `index.html`, a landing page listing the live models (one so far), in the same light and dark palette;
+  - `.nojekyll`, so Pages serves the files as they are;
+  - `gva-flows-v1/index.html`, the model.
+- **Updated to match:**
+  - **`.gitignore`:** the `web/dist/` entry is gone, and a comment says why `docs/` is committed. The old `web/dist/` build was deleted.
+  - **`package.json`:** a new `preview:pages` script serves `docs/` on port 8001, as Pages would.
+  - **Browser tests:** they open the built model, and the landing page's link to it, from `docs/`.
+  - **README:** a GitHub Pages section.
+  - **Plans:** folder references now say `plan_docs/`, and the build plan's layout lists `docs/`, `plan_docs/` and `e2e/`.
+- **CLAUDE.md:** its "The model" section had disappeared, apparently overwritten when the container setup changed. It is restored, with the new paths and a note on the Pages site.

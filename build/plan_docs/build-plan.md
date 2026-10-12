@@ -3,8 +3,9 @@
 *Draft for review, 3 October 2026.*
 
 - **The brief:** `/notes/model-spec-v1.md` (read-only). Section numbers below (§) refer to it.
-- **Build worklog:** `docs/build-worklog.md`, for results and any departures from the spec.
-- **Background notes:** indexed in `docs/notes-manifest.md`.
+- **Build worklog:** `plan_docs/build-worklog.md`, for results and any departures from the spec.
+- **Background notes:** indexed in `plan_docs/notes-manifest.md`.
+- **Folders:** this folder was `docs/` until 12 October 2026. `docs/` is now the GitHub Pages site.
 
 ## 1. Decisions
 
@@ -52,9 +53,11 @@ src/
   scenarios/   experiments E1–E8
 scripts/       Node-only runners: calibrate; run experiments and write results to out/
 tests/         Vitest, roughly one file per stage
-docs/          build-plan.md, build-worklog.md, notes-manifest.md
+e2e/           Playwright browser tests of the views
+plan_docs/     build-plan.md, views-plan.md, build-worklog.md, notes-manifest.md
 out/           generated results (gitignored)
-web/           stage 8
+web/           stage 8: the views' source (Svelte)
+docs/          the GitHub Pages site: one built, self-contained model per subfolder (committed)
 ```
 
 Engine modules follow the spec's sections:
@@ -190,7 +193,7 @@ A batch script writes each experiment's results to `out/` as CSV and JSON.
 - The lens-based expectations deferred from stage 6 are checked.
 
 ### Stage 8. Browser views
-The detailed plan, from the design pass, is in `docs/views-plan.md`.
+The detailed plan, from the design pass, is in `plan_docs/views-plan.md`.
 
 **Work:**
 - **Design pass with the user first.** §17 lists the candidates:

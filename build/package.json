@@ -16,7 +16,8 @@
     "dev": "vite --config web/vite.config.ts",
     "build:web": "vite build --config web/vite.config.ts && tsx scripts/inline-build.ts",
     "check:web": "svelte-check --tsconfig web/tsconfig.json",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "preview:pages": "vite preview --config web/vite.config.ts --outDir ../docs"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

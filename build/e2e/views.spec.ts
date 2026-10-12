@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { MODEL_FOLDER, PAGES_DIR } from '../web/pages';
 
 const SHOTS = 'out/screenshots';
 
@@ -143,13 +144,26 @@ test('the about page and the sector mix render', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+// These two need `npm run build:web` first: they check the built site in docs/, as GitHub Pages serves it.
 test('the single-file build opens from disk with no server', async ({ page }) => {
   const errors: string[] = [];
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   page.on('pageerror', (e) => errors.push(e.message));
-  await page.goto(`file://${process.cwd()}/web/dist/index.html?view=places&scenario=baseline&lens=gvaPerJob`);
+  await page.goto(`file://${process.cwd()}/${PAGES_DIR}/${MODEL_FOLDER}/index.html?view=places&scenario=baseline&lens=gvaPerJob`);
   await expect(page.getByTestId('card-C')).toHaveText('£81.6k');
   await page.getByTestId('view-capture').click();
   await expect(page.getByTestId('chain-tiles')).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('the GitHub Pages landing page links to the model', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(`file://${process.cwd()}/${PAGES_DIR}/index.html`);
+  await page.getByRole('link', { name: 'Where GVA is made, booked and received' }).click();
+  await expect(page).toHaveURL(new RegExp(`/${MODEL_FOLDER}/index.html`));
+  await expect(page.getByTestId('view-places')).toBeVisible();
+  await page.screenshot({ path: `${SHOTS}/pages-model.png` });
   expect(errors).toEqual([]);
 });

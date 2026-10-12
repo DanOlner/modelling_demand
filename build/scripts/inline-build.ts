@@ -1,14 +1,15 @@
 /**
- * Turns the Vite build in web/dist/ into one self-contained file, web/dist/index.html, with the
- * JavaScript (the model included) and the CSS inlined. It opens from the file system by
- * double-clicking, with no server, so the views can be shared with people who don't run the
- * container. Run by `npm run build:web` after `vite build`.
+ * Turns the Vite build in docs/<model folder>/ into one self-contained file, index.html, with
+ * the JavaScript (the model included) and the CSS inlined. GitHub Pages serves it from the docs/
+ * folder; it also opens from the file system by double-clicking, with no server. Run by
+ * `npm run build:web` after `vite build`.
  */
 
 import { readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { MODEL_FOLDER, PAGES_DIR } from '../web/pages';
 
-const dist = fileURLToPath(new URL('../web/dist/', import.meta.url));
+const dist = fileURLToPath(new URL(`../${PAGES_DIR}/${MODEL_FOLDER}/`, import.meta.url));
 let html = readFileSync(`${dist}index.html`, 'utf8');
 const assets = new Set<string>();
 

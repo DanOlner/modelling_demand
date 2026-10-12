@@ -23,5 +23,5 @@ playwright-report/
 # Model results written by the batch scripts; they can be regenerated at any time
 out/
 
-# The production build of the views (npm run build:web)
-web/dist/
+# Not ignored on purpose: docs/, the GitHub Pages site. Its built models (npm run build:web)
+# are committed so that Pages can serve them.

@@ -28,7 +28,7 @@ Use this file to decide which note to open, then open the note itself before rel
 ### `model-spec-v1.md`: the brief
 *Modified 3 Oct 20:14; 34 KB.*
 
-The specification being built. Four places (C, M, R, W), 17 domestic producers plus rest-of-world suppliers and an offshore IP holder, fixed input–output coefficients, markup pricing, spending-driven output, commuting, taxes and benefits, money stocks over time. It defines 11 lenses (§13), 15 switches (§14), eight experiments (§15), nine acceptance tests (§16) and the build order (§17). `docs/build-plan.md` turns it into build stages.
+The specification being built. Four places (C, M, R, W), 17 domestic producers plus rest-of-world suppliers and an offshore IP holder, fixed input–output coefficients, markup pricing, spending-driven output, commuting, taxes and benefits, money stocks over time. It defines 11 lenses (§13), 15 switches (§14), eight experiments (§15), nine acceptance tests (§16) and the build order (§17). `plan_docs/build-plan.md` turns it into build stages.
 
 ### `interrogating-the-2d-model.md`: why this model
 *Modified 3 Oct 19:53; 14 KB.*

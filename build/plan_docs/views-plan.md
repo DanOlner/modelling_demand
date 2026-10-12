@@ -31,7 +31,8 @@ The user accepted all four recommendations on 4 October 2026:
   - Tested on 4 October 2026: a page served on `0.0.0.0:8000` opened in the user's browser.
   - The server must listen on `0.0.0.0`, not `localhost`, or the host can't reach it.
 - **Screenshots** from the Playwright tests still go to `out/screenshots/`, as a record of each check-in and for my own visual review.
-- **A single-file build.** `npm run build:web` still makes one self-contained `web/dist/index.html`, for sharing the views with people who don't run the container.
+- **A single-file build.** `npm run build:web` makes one self-contained `index.html`, for sharing the views with people who don't run the container.
+- **GitHub Pages** (from 12 October 2026). The build goes straight into `docs/gva-flows-v1/index.html`, and GitHub Pages serves the `docs/` folder. Each live model has its own subfolder, listed on `docs/index.html`. The folder name is set in one place, `web/pages.ts`. `npm run preview:pages` serves `docs/` on port 8001, as Pages would.
 
 ## 3. The sequence and why
 
